@@ -5,6 +5,10 @@
 
 233脚本v3.34已经在src/download-caddy.sh 第9行，固定下载v1.0.4的Caddy
 
+# 为什么这么做
+我的个人观点是 "日常自用的自建梯子，用老版本的v2ray+caddy/nginx，走ws+tls+cdn就够了"。欢迎交流。
+https://zelikk.blogspot.com/2022/01/v2ray-caddy-ws-tls-cdn.html
+
 # 如果已经跑过233脚本了
 依次执行
 
