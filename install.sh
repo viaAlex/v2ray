@@ -78,10 +78,10 @@ systemd=true
 # _test=true
 
 transport=(
-	"TCP <<<<<<<<<<<<<<<<<<<<<<"
+	"TCP <<<<<<<<<<<<<<<<<没有域名选这个"
 	TCP_HTTP
 	WebSocket
-	"WebSocket + TLS <<<<<<<<<<"
+	"WebSocket + TLS <<<<<有域名选这个"
 	HTTP/2
 	mKCP
 	mKCP_utp
