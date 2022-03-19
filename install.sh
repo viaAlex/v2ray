@@ -13,7 +13,7 @@ _magenta() { echo -e ${magenta}$*${none}; }
 _cyan() { echo -e ${cyan}$*${none}; }
 
 # Root
-[[ $(id -u) != 0 ]] && echo -e "\n 哎呀……请使用 ${red}root ${none}用户运行 ${yellow}~(^_^) ${none}\n" && exit 1
+[[ $(id -u) != 0 ]] && echo -e "\n 哎呀……请使用 ${red}root ${none}用户运行 ${yellow}~(^_^) ${none}\nYou should run this shell script as root user." && exit 1
 
 cmd="apt-get"
 
@@ -43,7 +43,7 @@ x86_64)
 *)
 	echo -e " 
 	哈哈……这个 ${red}辣鸡脚本${none} 不支持你的系统。 ${yellow}(-_-) ${none}
-
+	Unsupported operating system.
 	备注: 仅支持 Ubuntu 16+ / Debian 8+ / CentOS 7+ 系统
 	" && exit 1
 	;;
@@ -62,13 +62,14 @@ else
 
 	echo -e " 
 	哈哈……这个 ${red}辣鸡脚本${none} 不支持你的系统。 ${yellow}(-_-) ${none}
-
+	Unsupported operating system.
 	备注: 仅支持 Ubuntu 16+ / Debian 8+ / CentOS 7+ 系统
 	" && exit 1
 
 fi
 
 uuid=$(cat /proc/sys/kernel/random/uuid)
+default_path=$(echo $uuid | sed 's/.*\([a-z0-9]\{12\}\)$/\1/g')
 old_id="e55c8d17-2cf3-b21a-bcf1-eeacb011ed79"
 v2ray_server_config="/etc/v2ray/config.json"
 v2ray_client_config="/etc/v2ray/233blog_v2ray_config.json"
@@ -78,10 +79,10 @@ systemd=true
 # _test=true
 
 transport=(
-	"TCP <<<<<<<<<<<<<<<<<没有域名选这个"
+	"TCP <<<<<<<<<<<<<<没有域名选这个<<<I don't have a domain"
 	TCP_HTTP
 	WebSocket
-	"WebSocket + TLS <<<<<有域名选这个"
+	"WebSocket + TLS <<有域名选这个<<<<<I have a domain"
 	HTTP/2
 	mKCP
 	mKCP_utp
@@ -156,7 +157,7 @@ v2ray_config() {
 	# clear
 	echo
 	while :; do
-		echo -e "请选择 "$yellow"V2Ray"$none" 传输协议 [${magenta}1-${#transport[*]}$none]"
+		echo -e "请选择 "$yellow"V2Ray"$none" 传输协议 [${magenta}1-${#transport[*]}$none] Choose transport mode"
 		echo
 		for ((i = 1; i <= ${#transport[*]}; i++)); do
 			Stream="${transport[$i - 1]}"
@@ -172,7 +173,7 @@ v2ray_config() {
 		echo "备注1: 含有 [dynamicPort] 的即启用动态端口.."
 		echo "备注2: [utp | srtp | wechat-video | dtls | wireguard] 分别伪装成 [BT下载 | 视频通话 | 微信视频通话 | DTLS 1.2 数据包 | WireGuard 数据包]"
 		echo
-		read -p "$(echo -e "(默认协议: ${cyan}TCP$none)"):" v2ray_transport
+		read -p "$(echo -e "(默认协议Default: ${cyan}TCP$none)"):" v2ray_transport
 		[ -z "$v2ray_transport" ] && v2ray_transport=1
 		case $v2ray_transport in
 		[1-9] | [1-2][0-9] | 3[0-2])
@@ -198,8 +199,8 @@ v2ray_port_config() {
 	*)
 		local random=$(shuf -i20001-65535 -n1)
 		while :; do
-			echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"]"
-			read -p "$(echo -e "(默认端口: ${cyan}${random}$none):")" v2ray_port
+			echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"] Input V2Ray port"
+			read -p "$(echo -e "(默认端口Default: ${cyan}${random}$none):")" v2ray_port
 			[ -z "$v2ray_port" ] && v2ray_port=$random
 			case $v2ray_port in
 			[1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5])
@@ -301,7 +302,7 @@ tls_config() {
 	echo
 	local random=$(shuf -i20001-65535 -n1)
 	while :; do
-		echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"]，不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口"
+		echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"]，不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口 Input V2Ray port"
 		read -p "$(echo -e "(默认端口: ${cyan}${random}$none):")" v2ray_port
 		[ -z "$v2ray_port" ] && v2ray_port=$random
 		case $v2ray_port in
@@ -331,8 +332,8 @@ tls_config() {
 
 	while :; do
 		echo
-		echo -e "请输入一个 $magenta正确的域名$none，一定一定一定要正确，不！能！出！错！"
-		read -p "(例如：233blog.com): " domain
+		echo -e "请输入一个 $magenta正确的域名$none，一定一定一定要正确，不！能！出！错！Input your domain"
+		read -p "(例如：mydomain.com): " domain
 		[ -z "$domain" ] && error && continue
 		echo
 		echo
@@ -345,7 +346,7 @@ tls_config() {
 	echo
 	echo -e "$yellow 请将 $magenta$domain$none $yellow解析到: $cyan$ip$none"
 	echo
-	echo -e "$yellow 请将 $magenta$domain$none $yellow解析到: $cyan$ip$none"
+	echo -e "$yellow Resolve $magenta$domain$none $yellowTo: $cyan$ip$none"
 	echo
 	echo -e "$yellow 请将 $magenta$domain$none $yellow解析到: $cyan$ip$none"
 	echo "----------------------------------------------------------------"
@@ -353,7 +354,7 @@ tls_config() {
 
 	while :; do
 
-		read -p "$(echo -e "(是否已经正确解析: [${magenta}Y$none]):") " record
+		read -p "$(echo -e "(是否已经正确解析: [${magenta}y$none]):") Is resolution correct?" record
 		if [[ -z "$record" ]]; then
 			error
 		else
@@ -399,7 +400,7 @@ auto_tls_config() {
 
 	while :; do
 
-		read -p "$(echo -e "(是否自动配置 TLS: [${magenta}Y/N$none]):") " auto_install_caddy
+		read -p "$(echo -e "(是否自动配置 TLS: [${magenta}Y/N$none]):") Setup TLS?" auto_install_caddy
 		if [[ -z "$auto_install_caddy" ]]; then
 			error
 		else
@@ -430,9 +431,9 @@ auto_tls_config() {
 path_config_ask() {
 	echo
 	while :; do
-		echo -e "是否开启 网站伪装 和 路径分流 [${magenta}Y/N$none]"
-		read -p "$(echo -e "(默认: [${cyan}N$none]):")" path_ask
-		[[ -z $path_ask ]] && path_ask="n"
+		echo -e "是否开启 网站伪装 和 路径分流 [${magenta}Y/n$none] Setup fake website and hide V2Ray behind a path?"
+		read -p "$(echo -e "(默认: [${cyan}Y$none]):")" path_ask
+		[[ -z $path_ask ]] && path_ask="y"
 
 		case $path_ask in
 		Y | y)
@@ -456,9 +457,9 @@ path_config_ask() {
 path_config() {
 	echo
 	while :; do
-		echo -e "请输入想要 ${magenta}用来分流的路径$none , 例如 /233blog , 那么只需要输入 233blog 即可"
-		read -p "$(echo -e "(默认: [${cyan}233blog$none]):")" path
-		[[ -z $path ]] && path="233blog"
+		echo -e "请输入想要 ${magenta}用来分流的路径$none , 例如 /ciys , 那么只需要输入 ciys 即可"
+		read -p "$(echo -e "(默认: [${cyan}${default_path}$none]):")" path
+		[[ -z $path ]] && path=$default_path
 
 		case $path in
 		*[/$]*)
@@ -513,7 +514,7 @@ proxy_site_config() {
 blocked_hosts() {
 	echo
 	while :; do
-		echo -e "是否开启广告拦截(会影响性能) [${magenta}Y/N$none]"
+		echo -e "是否开启广告拦截(会影响性能) [${magenta}y/N$none]"
 		read -p "$(echo -e "(默认 [${cyan}N$none]):")" blocked_ad
 		[[ -z $blocked_ad ]] && blocked_ad="n"
 
@@ -548,7 +549,7 @@ shadowsocks_config() {
 	echo
 
 	while :; do
-		echo -e "是否配置 ${yellow}Shadowsocks${none} [${magenta}Y/N$none]"
+		echo -e "是否配置 ${yellow}Shadowsocks${none} [${magenta}y/N$none]"
 		read -p "$(echo -e "(默认 [${cyan}N$none]):") " install_shadowsocks
 		[[ -z "$install_shadowsocks" ]] && install_shadowsocks="n"
 		if [[ "$install_shadowsocks" == [Yy] ]]; then
@@ -620,8 +621,8 @@ shadowsocks_password_config() {
 
 	while :; do
 		echo -e "请输入 "$yellow"Shadowsocks"$none" 密码"
-		read -p "$(echo -e "(默认密码: ${cyan}233blog.com$none)"): " sspass
-		[ -z "$sspass" ] && sspass="233blog.com"
+		read -p "$(echo -e "(默认密码: ${cyan}${default_path}$none)"): " sspass
+		[ -z "$sspass" ] && sspass=$default_path
 		case $sspass in
 		*[/$]*)
 			echo
@@ -750,7 +751,7 @@ domain_check() {
 	test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=A" | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}" | head -1)
 	if [[ $test_domain != $ip ]]; then
 		echo
-		echo -e "$red 检测域名解析错误....$none"
+		echo -e "$red 检测域名解析错误 Domain resolution ERROR ....$none"
 		echo
 		echo -e " 你的域名: $yellow$domain$none 未解析到: $cyan$ip$none"
 		echo
@@ -797,7 +798,7 @@ install_v2ray() {
 			echo
 			echo -e "$red 哎呀呀...安装失败了咯...$none"
 			echo
-			echo -e " 请确保你有完整的上传 233v2.com 的 V2Ray 一键安装脚本 & 管理脚本到当前 ${green}$(pwd) $none目录下"
+			echo -e " 请确保你有完整的上传 V2Ray 一键安装脚本 & 管理脚本到当前 ${green}$(pwd) $none目录下"
 			echo
 			exit 1
 		fi
@@ -960,7 +961,8 @@ backup_config() {
 }
 
 get_ip() {
-	ip=$(curl -s https://ipinfo.io/ip)
+	ip=$(curl -s https://api.myip.la)
+	[[ -z $ip ]] && ip=$(curl -s https://ipinfo.io/ip)
 	[[ -z $ip ]] && ip=$(curl -s https://api.ip.sb/ip)
 	[[ -z $ip ]] && ip=$(curl -s https://api.ipify.org)
 	[[ -z $ip ]] && ip=$(curl -s https://ip.seeip.org)
@@ -1059,7 +1061,7 @@ uninstall() {
 		echo -e "
 		$red 大胸弟...你貌似毛有安装 V2Ray ....卸载个鸡鸡哦...$none
 
-		备注...仅支持卸载使用我 (233v2.com) 提供的 V2Ray 一键安装脚本
+		备注...仅支持卸载使用我提供的 V2Ray 一键安装脚本
 		" && exit 1
 	fi
 
@@ -1093,15 +1095,11 @@ esac
 clear
 while :; do
 	echo
-	echo "........... V2Ray 一键安装脚本 & 管理脚本 by 233v2.com .........."
+	echo "........... V2Ray 一键安装脚本 & 管理脚本 .........."
 	echo
-	echo "帮助说明: https://233v2.com/post/1/"
+	echo " 1. 安装 Install"
 	echo
-	echo "搭建教程: https://233v2.com/post/2/"
-	echo
-	echo " 1. 安装"
-	echo
-	echo " 2. 卸载"
+	echo " 2. 卸载 Uninstall"
 	echo
 	if [[ $local_install ]]; then
 		echo -e "$yellow 温馨提示.. 本地安装已启用 ..$none"
