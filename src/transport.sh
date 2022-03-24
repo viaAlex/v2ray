@@ -1,8 +1,8 @@
 transport=(
-	TCP
+	"TCP <<<<<<<<<<<<<<没有域名选这个<<<I don't have a domain"
 	TCP_HTTP
 	WebSocket
-	"WebSocket + TLS"
+	"WebSocket + TLS <<有域名选这个<<<<<I have a domain"
 	HTTP/2
 	mKCP
 	mKCP_utp
