@@ -5,6 +5,16 @@
 
 233脚本v3.34已经在src/download-caddy.sh 第9行，固定下载v1.0.4的Caddy
 
+获得IP方法修改为 
+```
+ip=$(curl -s https://api.myip.la)
+```
+
+检查域名解析方法修改为 
+```
+test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=A" | jq -r '.Answer[0].data')
+```
+
 # 为什么这么做
 我的个人观点是 "日常自用的自建梯子，用老版本的v2ray+caddy/nginx，走ws+tls+cdn就够了"。欢迎交流。
 https://zelikk.blogspot.com/2022/01/v2ray-caddy-ws-tls-cdn.html
