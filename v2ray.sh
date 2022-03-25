@@ -950,7 +950,7 @@ tls_config() {
 		echo -e "请输入你的 $magenta正确的域名$none Input your domain"
 		echo -e "  如果你还没有域名，去${cyan}https://www.namesilo.com/?rid=ef95362qr${none}申请一个\$0.99USD的.xyz域名，可以使用${cyan}crazypeace${none}优惠码1USD"
 		echo -e "  If you don't have a domain, you can visit ${cyan}https://www.namesilo.com/?rid=ef95362qr${none} to buy the cheapest one, .xyz is \$0.99USD. Welcome to use 1USD coupon code ${cyan}crazypeace${none}"
-		echo -e "  申请域名教程: https://zelikk.blogspot.com/2022/03/namesilo-domain-1-usd.html"
+		echo -e "  申请域名教程: ${cyan}https://zelikk.blogspot.com/2022/03/namesilo-domain-1-usd.html${none}"
 		read -p "(例如：mydomain.com): " new_domain
 		[ -z "$new_domain" ] && error && continue
 		echo
@@ -1545,7 +1545,7 @@ change_domain() {
 			echo -e "请输入你的 $magenta正确的域名$none Input your domain"
 			echo -e "  如果你还没有域名，去${cyan}https://www.namesilo.com/?rid=ef95362qr${none}申请一个\$0.99USD的.xyz域名，可以使用${cyan}crazypeace${none}优惠码1USD"
 			echo -e "  If you don't have a domain, you can visit ${cyan}https://www.namesilo.com/?rid=ef95362qr${none} to buy the cheapest one, .xyz is \$0.99USD. Welcome to use 1USD coupon code ${cyan}crazypeace${none}"
-			echo -e "  申请域名教程: https://zelikk.blogspot.com/2022/03/namesilo-domain-1-usd.html"
+			echo -e "  申请域名教程: ${cyan}https://zelikk.blogspot.com/2022/03/namesilo-domain-1-usd.html${none}"
 			read -p "$(echo -e "(当前域名: ${cyan}$domain$none):") " new_domain
 			[ -z "$new_domain" ] && error && continue
 			if [[ $new_domain == $domain ]]; then
