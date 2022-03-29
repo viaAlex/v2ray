@@ -36,6 +36,11 @@ bash <(curl -s -L https://git.io/233v334.sh)
 ```bash
 bash <(curl -s -L https://git.io/233v334.sh)
 ```
+# 如果报错 `bash: curl: command not found` 可能你需要安装curl
+```
+apt update
+apt install -y curl
+```
 
 # 后记
 
