@@ -1132,7 +1132,7 @@ clear
 while :; do
 	echo
 	echo "........... V2Ray 一键安装脚本 & 管理脚本 ......基于233boy脚本修改...."
-	echo -e "有问题加群 ${cyan}https://t.me/+-wsJtBhlbQ8zMzRl{none}"
+	echo -e "有问题加群 ${cyan}https://t.me/+-wsJtBhlbQ8zMzRl${none}"
 	echo
 	echo " 1. 安装 Install"
 	echo
