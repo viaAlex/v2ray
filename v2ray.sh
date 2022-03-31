@@ -2602,43 +2602,22 @@ backup_config() {
 }
 
 get_ip() {
-    echo -e "如果你的小鸡是${magenta}双栈(同时有IPv4和IPv6的IP)${none}，请选择你把v2ray搭在哪个'网口'上"
-	echo "如果你不懂这段话是什么意思, 请直接回车"
-	read -p "$(echo -e "Input ${cyan}4${none} for IPv4, ${cyan}6${none} for IPv6:") " netstack
-	
-	if [[ $netstack = "4" ]]; then
+	if [[ NET_STACK = "" ]]; then
+		echo -e "如果你的小鸡是${magenta}双栈(同时有IPv4和IPv6的IP)${none}，请选择你把v2ray搭在哪个'网口'上"
+		echo "如果你不懂这段话是什么意思, 请直接回车"
+		read -p "$(echo -e "Input ${cyan}4${none} for IPv4, ${cyan}6${none} for IPv6:") " export NET_STACK
+		[[ -z $NET_STACK ]] && NET_STACK="default"
+	fi
+
+	if [[ $NET_STACK = "4" ]]; then
 		ip=$(curl -4 -s https://api.myip.la)
-		[[ -z $ip ]] && ip=$(curl -4 -s https://ipinfo.io/ip)
-		[[ -z $ip ]] && ip=$(curl -4 -s https://api.ip.sb/ip)
-		[[ -z $ip ]] && ip=$(curl -4 -s https://api.ipify.org)
-		[[ -z $ip ]] && ip=$(curl -4 s https://ip.seeip.org)
-		[[ -z $ip ]] && ip=$(curl -4 -s https://ifconfig.co/ip)
-		[[ -z $ip ]] && ip=$(curl -4 -s https://api.myip.com | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}")
-		[[ -z $ip ]] && ip=$(curl -4 -s icanhazip.com)
-		[[ -z $ip ]] && ip=$(curl -4 -s myip.ipip.net | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}")
-		[[ -z $ip ]] && echo -e "\n$red 这垃圾小鸡扔了吧！$none\n" && exit
-	elif [[ $netstack = "6" ]]; then 
+		[[ -z $ip ]] && echo -e "\n$red 检测本机IP失败, 请加群求助${cyan}https://t.me/+-wsJtBhlbQ8zMzRl${none}\n" && exit
+	elif [[ $NET_STACK = "6" ]]; then 
 		ip=$(curl -6 -s https://api.myip.la)
-		[[ -z $ip ]] && ip=$(curl -6 -s https://ipinfo.io/ip)
-		[[ -z $ip ]] && ip=$(curl -6 -s https://api.ip.sb/ip)
-		[[ -z $ip ]] && ip=$(curl -6 -s https://api.ipify.org)
-		[[ -z $ip ]] && ip=$(curl -6 -s https://ip.seeip.org)
-		[[ -z $ip ]] && ip=$(curl -6 -s https://ifconfig.co/ip)
-		[[ -z $ip ]] && ip=$(curl -6 -s https://api.myip.com | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}")
-		[[ -z $ip ]] && ip=$(curl -6 -s icanhazip.com)
-		[[ -z $ip ]] && ip=$(curl -6 -s myip.ipip.net | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}")
-		[[ -z $ip ]] && echo -e "\n$red 这垃圾小鸡扔了吧！$none\n" && exit
+		[[ -z $ip ]] && echo -e "\n$red 检测本机IP失败, 请加群求助${cyan}https://t.me/+-wsJtBhlbQ8zMzRl${none}\n" && exit
 	else
 		ip=$(curl -s https://api.myip.la)
-		[[ -z $ip ]] && ip=$(curl -s https://ipinfo.io/ip)
-		[[ -z $ip ]] && ip=$(curl -s https://api.ip.sb/ip)
-		[[ -z $ip ]] && ip=$(curl -s https://api.ipify.org)
-		[[ -z $ip ]] && ip=$(curl -s https://ip.seeip.org)
-		[[ -z $ip ]] && ip=$(curl -s https://ifconfig.co/ip)
-		[[ -z $ip ]] && ip=$(curl -s https://api.myip.com | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}")
-		[[ -z $ip ]] && ip=$(curl -s icanhazip.com)
-		[[ -z $ip ]] && ip=$(curl -s myip.ipip.net | grep -oE "([0-9]{1,3}\.){3}[0-9]{1,3}")
-		[[ -z $ip ]] && echo -e "\n$red 这垃圾小鸡扔了吧！$none\n" && exit
+		[[ -z $ip ]] && echo -e "\n$red 检测本机IP失败, 请加群求助${cyan}https://t.me/+-wsJtBhlbQ8zMzRl${none}\n" && exit
 	fi
 }
 
