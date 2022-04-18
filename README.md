@@ -54,6 +54,6 @@ https://zelikk.blogspot.com/2021/01/233v2ray-local.html
 # 如果你想下载某个“旧版本”的233脚本
 https://zelikk.blogspot.com/2021/08/233v2ray-github-commit.html
 
-## 欢迎用你的STAR告诉我这个Repo对你有用 Welcome STARs! :)
+## 用你的STAR告诉我这个Repo对你有用 Welcome STARs! :)
 
 [![Stargazers over time](https://starchart.cc/crazypeace/v2ray.svg)](https://starchart.cc/crazypeace/v2ray)
