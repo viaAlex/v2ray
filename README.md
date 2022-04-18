@@ -2,18 +2,18 @@
 这是一个固定使用 Caddy v1.0.4 和 V2Ray v4.27.0 的 233一键脚本 v3.34
 
 # 修改说明
-本repo从233脚本 v3.34 fork过来
+- 本repo从233脚本 v3.34 fork过来
 
-本repo修改了src/download-v2ray.sh 第3行，将最新V2Ray版本写死为 v4.27.0，不会跟随最新的V2Ray版本
+- 本repo修改了src/download-v2ray.sh 第3行，将最新V2Ray版本写死为 v4.27.0，不会跟随最新的V2Ray版本
 
-233脚本v3.34已经在src/download-caddy.sh 第9行，固定下载v1.0.4的Caddy
+- 233脚本v3.34已经在src/download-caddy.sh 第9行，固定下载v1.0.4的Caddy
 
-获得IP方法修改为 
+- 获得IP方法修改为 
 ```
 ip=$(curl -s https://api.myip.la)
 ```
 
-检查域名解析方法修改为 
+- 检查域名解析方法修改为 
 ```
 test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.com/dns-query?name=$domain&type=A" | jq -r '.Answer[0].data')
 ```
