@@ -403,7 +403,7 @@ auto_tls_config() {
 
 	while :; do
 
-		read -p "$(echo -e "(是否自动配置 TLS: [${magenta}Y/N$none]):") Setup TLS?" auto_install_caddy
+		read -p "$(echo -e "(是否自动配置 TLS: [${magenta}y/n$none]):") Setup auto TLS?" auto_install_caddy
 		if [[ -z "$auto_install_caddy" ]]; then
 			error
 		else
