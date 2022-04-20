@@ -959,7 +959,7 @@ tls_config() {
 		echo "----------------------------------------------------------------"
 		break
 	done
-	get_ip
+	get_ip_net_stack
 	echo
 	echo
 	echo -e "$yellow 请将 $magenta$new_domain$none $yellow解析到: $cyan$ip$none"
@@ -1560,7 +1560,7 @@ change_domain() {
 			echo "----------------------------------------------------------------"
 			break
 		done
-		get_ip
+		get_ip_net_stack
 		echo
 		echo
 		echo -e "$yellow 请将 $magenta$new_domain$none $yellow解析到: $cyan$ip$none"
@@ -2601,13 +2601,24 @@ backup_config() {
 
 }
 
-get_ip() {
+get_ip_net_stack() {
 	if [[ -z $NET_STACK ]]; then
 		echo -e "如果你的小鸡是${magenta}双栈(同时有IPv4和IPv6的IP)${none}，请选择你把v2ray搭在哪个'网口'上"
 		echo "如果你不懂这段话是什么意思, 请直接回车"
 		read -p "$(echo -e "Input ${cyan}4${none} for IPv4, ${cyan}6${none} for IPv6:") " export NET_STACK
 		[[ -z $NET_STACK ]] && NET_STACK="default"
 	fi
+
+	# 在系统变量中保存
+	sed -i 's/.*_V2RAY_NET_STACK_.*//g' /etc/profile
+	echo >> /etc/profile "export _V2RAY_NET_STACK_=${NET_STACK}"
+	source /etc/profile
+
+	get_ip
+}
+
+get_ip() {
+	[[ -z $NET_STACK ]] && export NET_STACK=$(echo $_V2RAY_NET_STACK_)
 
 	if [[ $NET_STACK = "4" ]]; then
 		ip=$(curl -4 -s https://api.myip.la)
