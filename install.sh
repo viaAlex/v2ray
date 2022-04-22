@@ -989,13 +989,13 @@ get_ip() {
 
 	if [[ $NET_STACK = "4" ]]; then
 		ip=$(curl -4 -s https://api.myip.la)
-		[[ -z $ip ]] && echo -e "\n$red 检测本机IP失败, 请加群求助${cyan}https://t.me/+-wsJtBhlbQ8zMzRl${none}\n" && exit
+		[[ -z $ip ]] && echo -e "\n$red 检测本机IP失败, 请加群求助${cyan}https://t.me/+D8aqonnCR3s1NTRl${none}\n" && exit
 	elif [[ $NET_STACK = "6" ]]; then 
 		ip=$(curl -6 -s https://api.myip.la)
-		[[ -z $ip ]] && echo -e "\n$red 检测本机IP失败, 请加群求助${cyan}https://t.me/+-wsJtBhlbQ8zMzRl${none}\n" && exit
+		[[ -z $ip ]] && echo -e "\n$red 检测本机IP失败, 请加群求助${cyan}https://t.me/+D8aqonnCR3s1NTRl${none}\n" && exit
 	else
 		ip=$(curl -s https://api.myip.la)
-		[[ -z $ip ]] && echo -e "\n$red 检测本机IP失败, 请加群求助${cyan}https://t.me/+-wsJtBhlbQ8zMzRl${none}\n" && exit
+		[[ -z $ip ]] && echo -e "\n$red 检测本机IP失败, 请加群求助${cyan}https://t.me/+D8aqonnCR3s1NTRl${none}\n" && exit
 	fi
 }
 
@@ -1124,7 +1124,7 @@ clear
 while :; do
 	echo
 	echo "........... V2Ray 一键安装脚本 & 管理脚本 ...... 基于233boy脚本v3.34修改 ...."
-	echo -e "有问题加群交流 ${cyan}https://t.me/+-wsJtBhlbQ8zMzRl${none}"
+	echo -e "有问题加群交流 ${cyan}https://t.me/+D8aqonnCR3s1NTRl${none}"
 	echo
 	echo " 1. 安装 Install"
 	echo
