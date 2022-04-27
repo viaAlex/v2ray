@@ -27,14 +27,14 @@ https://zelikk.blogspot.com/2022/01/v2ray-caddy-ws-tls-cdn.html
 
 ```bash
 v2ray uninstall
-bash <(curl -s -L https://git.io/233v334.sh)
+bash <(curl -L https://git.io/233v334.sh)
 ```
 
 # 如果还没有跑过233脚本
 执行
 
 ```bash
-bash <(curl -s -L https://git.io/233v334.sh)
+bash <(curl -L https://git.io/233v334.sh)
 ```
 # 如果报错 `bash: curl: command not found` 可能你需要安装curl
 ```
