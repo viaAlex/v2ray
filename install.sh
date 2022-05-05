@@ -988,13 +988,13 @@ get_ip() {
 	[[ -z $NET_STACK ]] && export NET_STACK=$(echo $_V2RAY_NET_STACK_)
 
 	if [[ $NET_STACK == "4" ]]; then
-		ip=$(curl -4 -s https://api.myip.la)
+		ip=$(curl -4 -s http://api.myip.la)
 		[[ -z $ip ]] && echo -e "\n$red 检测本机IP失败, 请加群求助${cyan}https://t.me/+D8aqonnCR3s1NTRl${none}\n" && exit
 	elif [[ $NET_STACK == "6" ]]; then 
-		ip=$(curl -6 -s https://api.myip.la)
+		ip=$(curl -6 -s http://api.myip.la)
 		[[ -z $ip ]] && echo -e "\n$red 检测本机IP失败, 请加群求助${cyan}https://t.me/+D8aqonnCR3s1NTRl${none}\n" && exit
 	else
-		ip=$(curl -s https://api.myip.la)
+		ip=$(curl -s http://api.myip.la)
 		[[ -z $ip ]] && echo -e "\n$red 检测本机IP失败, 请加群求助${cyan}https://t.me/+D8aqonnCR3s1NTRl${none}\n" && exit
 	fi
 }

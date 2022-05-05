@@ -10,7 +10,7 @@
 
 - 获得IP方法修改为 
 ```
-ip=$(curl -s https://api.myip.la)
+ip=$(curl -s http://api.myip.la)
 ```
 
 - 检查域名解析方法修改为 
