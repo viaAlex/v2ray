@@ -19,8 +19,12 @@ test_domain=$(curl -sH 'accept: application/dns-json' "https://cloudflare-dns.co
 ```
 
 # 为什么这么做
-我的个人观点是 "日常自用的自建梯子，用老版本的v2ray+caddy/nginx，走ws+tls+cdn就够了"。欢迎交流。
+- 我的个人观点是 "日常自用的自建梯子，用老版本的v2ray+caddy/nginx，走ws+tls+cdn就够了"。欢迎交流。
 https://zelikk.blogspot.com/2022/01/v2ray-caddy-ws-tls-cdn.html
+
+- 有些翻墙客户端上面的V2Ray不能更新到支持AlterID为0的内核版本
+
+- 有些人的服务器原来是用233的脚本搭的，在重装服务器时，只想把原来的配置文件恢复进去就好。
 
 # 如果已经跑过233脚本了
 依次执行
