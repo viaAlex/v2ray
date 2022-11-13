@@ -499,7 +499,7 @@ proxy_site_config() {
 		*)
 			echo
 			echo
-			echo -e "$yellow 伪装的网址camouflage site = ${cyan}${proxy_site}$none"
+			echo -e "$yellow 伪装的网址 Camouflage site = ${cyan}${proxy_site}$none"
 			echo "----------------------------------------------------------------"
 			echo
 			break
