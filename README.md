@@ -59,6 +59,7 @@ https://zelikk.blogspot.com/2021/01/233v2ray-local.html
 https://zelikk.blogspot.com/2021/08/233v2ray-github-commit.html
 
 # 无人值守一把梭
+https://zelikk.blogspot.com/2022/11/spawn-expect-afk-233v334.html
 ```
 apt update && apt install -y expect wget && wget -N git.io/233v334.sh && wget -N https://github.com/crazypeace/v2ray/raw/master/afk.exp && expect afk.exp
 ```
