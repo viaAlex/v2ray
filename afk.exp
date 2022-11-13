@@ -1,0 +1,31 @@
+set DOMAIN [lindex $argv 0]
+set NETSTACK [lindex $argv 1]
+
+spawn bash ./233v334.sh
+expect "*请选择*"
+send "\r"
+expect "*Transport mode*"
+send "4\r"
+expect "*Port*"
+send "\r"
+expect "*Domain*"
+send "$DOMAIN\r"
+expect "Input 4 for IPv4, 6 for IPv6*"
+send "$NETSTACK\r"
+expect "*Is resolution correct*"
+send "y\r"
+expect "*Setup auto TLS*"
+send "\r"
+expect "*Setup fake website and hide V2Ray behind a path*"
+send "\r"
+expect "*Path*"
+send "\r"
+expect "*Camouflage site*"
+send "\r"
+expect "*广告拦截*"
+send "\r"
+expect "是否配置 Shadowsocks*"
+send "\r"
+expect "按 Enter 回车键 继续*"
+send "\r"
+expect eof
