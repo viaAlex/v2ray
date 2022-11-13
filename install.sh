@@ -173,7 +173,7 @@ v2ray_config() {
 		echo "备注1: 含有 [dynamicPort] 的即启用动态端口.."
 		echo "备注2: [utp | srtp | wechat-video | dtls | wireguard] 分别伪装成 [BT下载 | 视频通话 | 微信视频通话 | DTLS 1.2 数据包 | WireGuard 数据包]"
 		echo
-		read -p "$(echo -e "(默认协议Default: ${cyan}TCP$none)"):" v2ray_transport
+		read -p "$(echo -e "传输协议 Transport mode (默认Default ${cyan}1. TCP$none): ")" v2ray_transport
 		[ -z "$v2ray_transport" ] && v2ray_transport=1
 		case $v2ray_transport in
 		[1-9] | [1-2][0-9] | 3[0-2])
@@ -199,8 +199,7 @@ v2ray_port_config() {
 	*)
 		local random=$(shuf -i20001-65535 -n1)
 		while :; do
-			echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"] Input V2Ray port"
-			read -p "$(echo -e "(默认端口Default: ${cyan}${random}$none):")" v2ray_port
+			read -p "$(echo -e "请输入 ${yellow}V2Ray${none} 端口 [${magenta}1-65535${none}] Input V2Ray port (默认Default ${cyan}${random}$none):")" v2ray_port
 			[ -z "$v2ray_port" ] && v2ray_port=$random
 			case $v2ray_port in
 			[1-9] | [1-9][0-9] | [1-9][0-9][0-9] | [1-9][0-9][0-9][0-9] | [1-5][0-9][0-9][0-9][0-9] | 6[0-4][0-9][0-9][0-9] | 65[0-4][0-9][0-9] | 655[0-3][0-5])
@@ -302,8 +301,8 @@ tls_config() {
 	echo
 	local random=$(shuf -i20001-65535 -n1)
 	while :; do
-		echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"]，不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口 Input V2Ray port"
-		read -p "$(echo -e "(默认端口: ${cyan}${random}$none):")" v2ray_port
+		echo -e "请输入 "$yellow"V2Ray"$none" 端口 ["$magenta"1-65535"$none"]，不能选择 "$magenta"80"$none" 或 "$magenta"443"$none" 端口"
+		read -p "$(echo -e "V2Ray 端口 Port (默认Default ${cyan}${random}$none): ")" v2ray_port
 		[ -z "$v2ray_port" ] && v2ray_port=$random
 		case $v2ray_port in
 		80)
@@ -336,7 +335,7 @@ tls_config() {
 		echo -e "  如果你还没有域名，去${cyan}https://www.namesilo.com/?rid=ef95362qr${none}申请一个\$0.99USD的.xyz域名，可以使用${cyan}crazypeace${none}优惠码1USD"
 		echo -e "  If you don't have a domain, you can visit ${cyan}https://www.namesilo.com/?rid=ef95362qr${none} to buy the cheapest one, .xyz is \$0.99USD. Welcome to use 1USD coupon code ${cyan}crazypeace${none}"
 		echo -e "  申请域名教程: ${cyan}https://zelikk.blogspot.com/2022/03/namesilo-domain-1-usd.html${none}"
-		read -p "(例如：mydomain.com): " domain
+		read -p "域名 Domain (例如：mydomain.com): " domain
 		[ -z "$domain" ] && error && continue
 		echo
 		echo
@@ -350,14 +349,12 @@ tls_config() {
 	echo -e "$yellow 请将 $magenta$domain$none $yellow解析到: $cyan$ip$none"
 	echo
 	echo -e "$yellow Resolve $magenta$domain$none $yellow To: $cyan$ip$none"
-	echo
-	echo -e "$yellow 请将 $magenta$domain$none $yellow解析到: $cyan$ip$none"
 	echo "----------------------------------------------------------------"
 	echo
 
 	while :; do
 
-		read -p "$(echo -e "(是否已经正确解析: [${magenta}y$none]):") Is resolution correct?" record
+		read -p "$(echo -e "是否已经正确解析? Is resolution correct? [${magenta}y${none}]: ")" record
 		if [[ -z "$record" ]]; then
 			error
 		else
@@ -402,31 +399,28 @@ auto_tls_config() {
 	echo
 
 	while :; do
+		read -p "$(echo -e "是否自动配置TLS? Setup auto TLS? [${magenta}Y/n${none}] (默认Default ${cyan}Y${none}): ")" auto_install_caddy
+		[[ -z $auto_install_caddy ]] && auto_install_caddy="y"
 
-		read -p "$(echo -e "(是否自动配置 TLS: [${magenta}y/n$none]):") Setup auto TLS?" auto_install_caddy
-		if [[ -z "$auto_install_caddy" ]]; then
-			error
+		if [[ "$auto_install_caddy" == [Yy] ]]; then
+			caddy=true
+			install_caddy_info="打开"
+			echo
+			echo
+			echo -e "$yellow 自动配置 TLS = $cyan$install_caddy_info$none"
+			echo "----------------------------------------------------------------"
+			echo
+			break
+		elif [[ "$auto_install_caddy" == [Nn] ]]; then
+			install_caddy_info="关闭"
+			echo
+			echo
+			echo -e "$yellow 自动配置 TLS = $cyan$install_caddy_info$none"
+			echo "----------------------------------------------------------------"
+			echo
+			break
 		else
-			if [[ "$auto_install_caddy" == [Yy] ]]; then
-				caddy=true
-				install_caddy_info="打开"
-				echo
-				echo
-				echo -e "$yellow 自动配置 TLS = $cyan$install_caddy_info$none"
-				echo "----------------------------------------------------------------"
-				echo
-				break
-			elif [[ "$auto_install_caddy" == [Nn] ]]; then
-				install_caddy_info="关闭"
-				echo
-				echo
-				echo -e "$yellow 自动配置 TLS = $cyan$install_caddy_info$none"
-				echo "----------------------------------------------------------------"
-				echo
-				break
-			else
-				error
-			fi
+			error
 		fi
 
 	done
@@ -434,8 +428,8 @@ auto_tls_config() {
 path_config_ask() {
 	echo
 	while :; do
-		echo -e "是否开启 网站伪装 和 路径分流 [${magenta}Y/n$none] Setup fake website and hide V2Ray behind a path?"
-		read -p "$(echo -e "(默认: [${cyan}Y$none]):")" path_ask
+		echo -e ""
+		read -p "$(echo -e "是否开启 网站伪装 和 路径分流 Setup fake website and hide V2Ray behind a path? [${magenta}Y/n${none}] (默认Default ${cyan}Y${none}): ")" path_ask
 		[[ -z $path_ask ]] && path_ask="y"
 
 		case $path_ask in
@@ -461,7 +455,7 @@ path_config() {
 	echo
 	while :; do
 		echo -e "请输入想要 ${magenta}用来分流的路径$none , 例如 /ciys , 那么只需要输入 ciys 即可"
-		read -p "$(echo -e "(默认: [${cyan}${default_path}$none]):")" path
+		read -p "$(echo -e "分流的路径 Path (默认Default [${cyan}${default_path}$none]): ")" path
 		[[ -z $path ]] && path=$default_path
 
 		case $path in
@@ -492,7 +486,7 @@ proxy_site_config() {
 		echo -e "然后打开你的域名时候...显示出来的内容就是来自 https://zelikk.blogspot.com 的内容"
 		echo -e "Input a camouflage site. When GFW visit your domain, the camouflage site will display."
 		echo -e "如果不能伪装成功...可以使用 v2ray config 修改伪装的网址"
-		read -p "$(echo -e "(默认: [${cyan}https://zelikk.blogspot.com$none]):")" proxy_site
+		read -p "$(echo -e "伪装的网址 Camouflage site (默认Default [${cyan}https://zelikk.blogspot.com${none}]): ")" proxy_site
 		[[ -z $proxy_site ]] && proxy_site="https://zelikk.blogspot.com"
 
 		case $proxy_site in
@@ -517,8 +511,7 @@ proxy_site_config() {
 blocked_hosts() {
 	echo
 	while :; do
-		echo -e "是否开启广告拦截(会影响性能) [${magenta}y/N$none]"
-		read -p "$(echo -e "(默认 [${cyan}N$none]):")" blocked_ad
+		read -p "$(echo -e "是否开启广告拦截(会影响性能)  [${magenta}y/N${none}] (默认Default ${cyan}N${none}): ")" blocked_ad
 		[[ -z $blocked_ad ]] && blocked_ad="n"
 
 		case $blocked_ad in
@@ -552,8 +545,7 @@ shadowsocks_config() {
 	echo
 
 	while :; do
-		echo -e "是否配置 ${yellow}Shadowsocks${none} [${magenta}y/N$none]"
-		read -p "$(echo -e "(默认 [${cyan}N$none]):") " install_shadowsocks
+		read -p "$(echo -e "是否配置 ${yellow}Shadowsocks${none} [${magenta}y/N${none}] (默认Default ${cyan}N${none}): ")" install_shadowsocks
 		[[ -z "$install_shadowsocks" ]] && install_shadowsocks="n"
 		if [[ "$install_shadowsocks" == [Yy] ]]; then
 			echo
@@ -972,7 +964,7 @@ get_ip_net_stack() {
 	if [[ -z $NET_STACK ]]; then
 		echo -e "如果你的小鸡是${magenta}双栈(同时有IPv4和IPv6的IP)${none}，请选择你把v2ray搭在哪个'网口'上"
 		echo "如果你不懂这段话是什么意思, 请直接回车"
-		read -p "$(echo -e "Input ${cyan}4${none} for IPv4, ${cyan}6${none} for IPv6:") " NET_STACK
+		read -p "$(echo -e "Input 4 for IPv4, 6 for IPv6 [${magenta}4/6${none}]: ")" NET_STACK
 		[[ -z $NET_STACK ]] && NET_STACK="default"
 	fi
 
@@ -1134,7 +1126,7 @@ while :; do
 		echo -e "$yellow 温馨提示.. 本地安装已启用 ..$none"
 		echo
 	fi
-	read -p "$(echo -e "请选择 [${magenta}1-2$none](默认${cyan}1.安装${none}):")" choose
+	read -p "$(echo -e "请选择 [${magenta}1-2$none](默认Default ${cyan}1.安装${none}): ")" choose
 	[[ -z $choose ]] && choose=1
 	case $choose in
 	1)
