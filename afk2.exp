@@ -1,0 +1,30 @@
+set DOMAIN [lindex $argv 0]
+set NETSTACK [lindex $argv 1]
+
+spawn bash ./233v334.sh
+expect {
+  "*Transport mode*" {
+    send "4\r"
+    exp_continue
+  }
+  "*Domain*" {
+    send "$DOMAIN\r"
+    exp_continue
+  }
+  "*Input 4 for IPv4, 6 for IPv6*"  {
+    send "$NETSTACK\r"
+    exp_continue
+  }
+  "*Is resolution correct*" {
+    send "y\r"
+    exp_continue
+  }
+  "*Ctrl + C*" {
+    send "\r"
+    exp_continue
+  }
+  "*Default*" {
+    send "\r"
+    exp_continue
+  }
+}
